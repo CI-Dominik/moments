@@ -2,14 +2,14 @@ import React from 'react'
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import logo from '../assets/logo.png'
 import styles from '../styles/NavBar.module.css'
-import { NavLink } from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
 
 const NavBar = () => {
     return (
         <Navbar className={styles.NavBar} expand="md" fixed="top">
             <Container>
                 <NavLink to="/">
-                <Navbar.Brand><img src={logo} alt="Logo" height="45" /></Navbar.Brand>
+                    <Navbar.Brand><img src={logo} alt="Logo" height="45" /></Navbar.Brand>
                 </NavLink>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse>
@@ -17,14 +17,26 @@ const NavBar = () => {
                         className="ms-auto text-center"
                         style={{ maxHeight: '100px' }}
                     >
-                        <NavLink to="/">
+                        <NavLink
+                            exact
+                            className={styles.NavLink}
+                            activeClassName={styles.Active}
+                            to="/">
                             <i className="fas fa-home"></i> Home
                         </NavLink>
-                        <NavLink to="/sign-in">
-                            <i className="fas fa-sign-in-alt"></i> Sign in
+                        <NavLink
+                            exact
+                            className={styles.NavLink}
+                            activeClassName={styles.Active}
+                            to="/sign-in">
+                            <i className="fas fa-sign-in-alt"></i> Sign-in
                         </NavLink>
-                        <NavLink to="/sign-up">
-                            <i className="fas fa-user-plus"></i> Sign up
+                        <NavLink
+                            exact
+                            className={styles.NavLink}
+                            activeClassName={styles.Active}
+                            to="/sign-up">
+                            <i className="fas fa-user-plus"></i> Sign-up
                         </NavLink>
                     </Nav>
                 </Navbar.Collapse>
