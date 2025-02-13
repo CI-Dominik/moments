@@ -1,16 +1,17 @@
 import React from 'react'
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import logo from '../assets/logo.png'
+import styles from '../styles/NavBar.module.css'
 
 const NavBar = () => {
     return (
-        <Navbar expand="md" fixed="top">
-            <Container fluid>
+        <Navbar className={styles.NavBar} expand="md" fixed="top">
+            <Container>
                 <Navbar.Brand><img src={logo} alt="Logo" height="45" /></Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse>
                     <Nav
-                        className="ms-md-auto"
+                        className="ms-auto text-center"
                         style={{ maxHeight: '100px' }}
                     >
                         <Nav.Link>
