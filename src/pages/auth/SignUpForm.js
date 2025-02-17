@@ -28,10 +28,10 @@ const SignUpForm = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            await axios.post('dj-rest-auth/registration/')
+            await axios.post('dj-rest-auth/registration/', signUpData)
             history.push('/sign-in')
         } catch(error) {
-            console.log("Error")
+            console.log(error.response);
             setErrors(error.response?.data)
         }
     }
@@ -44,27 +44,41 @@ const SignUpForm = () => {
 
                     {/* Sign-up Form */}
 
-                    <Form>
+                    <Form onSubmit={handleSubmit}>
                         <Form.Group className="mb-3" controlId="username">
                             <Form.Label className="d-none">Username:</Form.Label>
                             <Form.Control className={styles.Input} type="text" placeholder="Enter Username" name="username" value={username} onChange={handleChange} />
                         </Form.Group>
 
-                        {errors.username?.map((message, idx) => {
+                        {errors.username?.map((message, idx) => 
                             <Alert variant="warning" key={idx}>{message}</Alert>
-                        })}
+                        )}
 
                         <Form.Group className="mb-3" controlId="password1">
                             <Form.Label className="d-none">Password:</Form.Label>
                             <Form.Control className={styles.Input} type="password" placeholder="Password" name="password1" value={password1} onChange={handleChange} />
                         </Form.Group>
+
+                        {errors.password1?.map((message, idx) => 
+                            <Alert variant="warning" key={idx}>{message}</Alert>
+                        )}
+
                         <Form.Group className="mb-3" controlId="password2">
                             <Form.Label className="d-none">Confirm password:</Form.Label>
                             <Form.Control className={styles.Input} type="password" placeholder="Confirm Password" name="password2" value={password2} onChange={handleChange} />
                         </Form.Group>
-                        <Button className={`${btnStyles.Button} ${btnStyles.Wide} ${btnStyles.Bright}`} type="submit" onSubmit={handleSubmit}>
+
+                        {errors.password2?.map((message, idx) => 
+                            <Alert variant="warning" key={idx}>{message}</Alert>
+                        )}
+
+                        <Button className={`${btnStyles.Button} ${btnStyles.Wide} ${btnStyles.Bright}`} type="submit">
                             Sign-up
                         </Button>
+
+                        {errors.non_field_errors?.map((message, idx) => 
+                            <Alert variant="warning" key={idx} className="mt-3">{message}</Alert>
+                        )}
                     </Form>
                 </Container>
                 <Container className={`mt-3 ${appStyles.Content}`}>
