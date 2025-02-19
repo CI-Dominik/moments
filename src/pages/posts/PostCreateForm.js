@@ -49,20 +49,20 @@ function PostCreateForm() {
     event.preventDefault();
     const formData = new FormData();
 
-    formData.append('title', title);
-    formData.append('content', content);
-    formData.append('image', imageInput.current.files[0]);
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("image", imageInput.current.files[0]);
 
     try {
-      const { data } = await axiosReq.post('/posts/', formData);
-      history.push(`/posts/${data.id}`)
+      const { data } = await axiosReq.post("/posts/", formData);
+      history.push(`/posts/${data.id}`);
     } catch (error) {
+      console.log(error);
       if (error.response?.status !== 401) {
         setErrors(error.response?.data);
       }
     }
-
-  }
+  };
 
   const textFields = (
     <div className="text-center">
