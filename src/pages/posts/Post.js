@@ -2,14 +2,29 @@ import React from 'react'
 import styles from '../../styles/Post.module.css'
 import { useCurrentUser } from '../../contexts/CurrentUserContext'
 import { Card, Media, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { Link, useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import Avatar from '../../components/Avatar'
 import { axiosReq, axiosRes } from '../../api/axiosDefaults';
+import { MoreDropdown } from '../../components/MoreDropdown';
 
 const Post = (props) => {
     const { id, owner, profile_id, profile_image, comments_count, likes_count, like_id, title, content, image, updated_at, postPage, setPosts } = props;
     const currentUser = useCurrentUser();
     const is_owner = currentUser?.username === owner
+    const history = useHistory();
+
+    const handleEdit = () => {
+        history.push(`/posts/${id}/edit`)
+    }
+    
+    const handleDelete = async () => {
+        try {
+            await axiosRes.delete(`/posts/${id}`);
+            history.goBack();
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const handleLike = async () => {
         try {
@@ -54,7 +69,7 @@ const Post = (props) => {
                     <div className="d-flex align-items-center ml-auto">
                         <span>{updated_at}</span>
                     </div>
-                    {is_owner && postPage && "..."}
+                    {is_owner && postPage && <MoreDropdown handleEdit={handleEdit} handleDelete={handleDelete} />}
                 </Media>
             </Card.Body>
             <Link to={`/posts/${id}`}>
